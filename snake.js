@@ -1,93 +1,55 @@
 class Snake {
   constructor() {
-    this.x = 0;
-    this.y = 0;
+    this.x = width / 2;
+    this.y = height / 2;
 
-    this.xSpeed = scale * 1;
+    this.xSpeed = 0;
     this.ySpeed = 0;
 
-    this.total = 0;
-    this.tail = [];
-
-    this.score = 0;
+    this.snakeBody = [];
+    this.tailLength = 1;
   }
-
   draw() {
-    ctx.fillStyle = "#00B200";
-
-    for (let i = 0; i < this.tail.length; i++) {
-      ctx.fillRect(this.tail[i].x, this.tail[i].y, scale, scale);
-    }
-
+    ctx.fillStyle = "orange";
     ctx.fillRect(this.x, this.y, scale, scale);
   }
-
   update() {
-    for (let i = 0; i < this.tail.length - 1; i++) {
-      this.tail[i] = this.tail[i + 1];
-    }
-
-    this.tail[this.total - 1] = { x: this.x, y: this.y };
-
     this.x += this.xSpeed;
     this.y += this.ySpeed;
+  }
+  listener(direction) {
+    if (direction === "Up") {
+      if (this.ySpeed === scale) return;
 
-    // if snake hit the wall
-    if (this.x > canvas.width) {
-      this.x = 0;
+      this.xSpeed = 0;
+      this.ySpeed = -scale;
     }
 
-    if (this.y > canvas.height) {
-      this.y = 0;
+    if (direction === "Down") {
+      if (this.ySpeed === -scale) return;
+
+      this.xSpeed = 0;
+      this.ySpeed = scale;
     }
 
-    if (this.x < 0) {
-      this.x = canvas.width;
+    if (direction === "Right") {
+      if (this.xSpeed === -scale) return;
+
+      this.xSpeed = scale;
+      this.ySpeed = 0;
     }
 
-    if (this.y < 0) {
-      this.y = canvas.height;
+    if (direction === "Left") {
+      if (this.xSpeed === scale) return;
+
+      this.xSpeed = -scale;
+      this.ySpeed = 0;
     }
   }
-
-  changeDirection(direction) {
-    switch (direction) {
-      case "Up":
-        this.xSpeed = 0;
-        this.ySpeed = -scale * 1;
-        break;
-
-      case "Down":
-        this.xSpeed = 0;
-        this.ySpeed = scale * 1;
-        break;
-
-      case "Left":
-        this.xSpeed = -scale * 1;
-        this.ySpeed = 0;
-        break;
-
-      case "Right":
-        this.xSpeed = scale * 1;
-        this.ySpeed = 0;
-        break;
-    }
-  }
-
-  eat(food) {
-    this.updateScore(1);
-
-    score.innerHTML = this.score;
-
-    if (this.x === food.x && this.y === food.y) {
-      this.total++;
+  eat(foodPos) {
+    if (foodPos.x === this.x && foodPos.y === this.y) {
+      this.tailLength++;
       return true;
     }
-
-    return false;
-  }
-
-  updateScore(score = 10) {
-    this.score += score;
   }
 }
