@@ -27,13 +27,13 @@ const start = () => {
 
     food.draw();
 
-    snake.update();
     snake.draw();
+    snake.update();
 
     if (snake.eat(food)) {
       food.pickPosition();
     }
-  }, 400);
+  }, 800);
 };
 
 canvas.addEventListener("click", (event) => {

@@ -6,14 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+
     *{
       margin:0;
       padding:0;
       box-sizing: border-box;
     }
     .board{
-      background-color: black;
-      
+      background-color: black;  
+      border: black 1px solid;    
+    }
+
+    .container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
   </style>
 
@@ -21,7 +29,9 @@
 </head>
 <body>
   
-  <canvas id="canvas" width="400" height="400" class="board">
+  <div class="container">
+    <canvas id="canvas" width="400" height="400" class="board"></canvas>
+  </div>
   
   <script src="Board.js"></script>
   <script src="Button.js"></script>

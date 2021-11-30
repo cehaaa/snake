@@ -1,53 +1,82 @@
 class Snake {
   constructor() {
-    this.x = width / 2;
-    this.y = height / 2;
+    this.x = 0;
+    this.y = 0;
 
     this.xSpeed = 0;
     this.ySpeed = 0;
 
-    this.snakeBody = [];
+    this.body = [];
     this.tailLength = 1;
+
+    this.xSpeed = scale;
+    this.ySpeed = 0;
+
+    this.init();
+  }
+  init() {
+    this.body.push({
+      x: this.x,
+      y: this.y,
+    });
   }
   draw() {
-    ctx.fillStyle = "orange";
-    ctx.fillRect(this.x, this.y, scale, scale);
+    for (let i = 0; i < this.body.length; i++) {
+      let color = i === 0 ? "#75e349" : "orange";
+      ctx.fillStyle = color;
+      ctx.fillRect(this.body[i].x, this.body[i].y, scale, scale);
+    }
   }
-  update() {
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
+  update(props) {
+    if (props) {
+      this.xSpeed = props.x;
+      this.ySpeed = props.y;
+    }
+
+    // if (props) {
+    this.body.unshift({
+      // x: (this.x += props.x),
+      // y: (this.y += props.y),
+      x: (this.x += this.xSpeed),
+      y: (this.y += this.ySpeed),
+    });
+    this.body.pop();
+    // }
   }
   listener(direction) {
     if (direction === "Up") {
-      if (this.ySpeed === scale) return;
-
-      this.xSpeed = 0;
-      this.ySpeed = -scale;
+      this.update({
+        x: 0,
+        y: scale * -1,
+      });
     }
-
     if (direction === "Down") {
-      if (this.ySpeed === -scale) return;
-
-      this.xSpeed = 0;
-      this.ySpeed = scale;
+      this.update({
+        x: 0,
+        y: scale,
+      });
     }
-
     if (direction === "Right") {
-      if (this.xSpeed === -scale) return;
-
-      this.xSpeed = scale;
-      this.ySpeed = 0;
+      this.update({
+        x: scale,
+        y: 0,
+      });
     }
-
     if (direction === "Left") {
-      if (this.xSpeed === scale) return;
-
-      this.xSpeed = -scale;
-      this.ySpeed = 0;
+      this.update({
+        x: scale * -1,
+        y: 0,
+      });
     }
   }
   eat(foodPos) {
     if (foodPos.x === this.x && foodPos.y === this.y) {
+      const tail = this.body[this.body.length - 1];
+      this.body.push({
+        x: tail.x,
+        y: tail.y,
+      });
+
       this.tailLength++;
       return true;
     }

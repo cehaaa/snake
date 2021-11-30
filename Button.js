@@ -1,7 +1,7 @@
 class Button {
   constructor() {
     this.x = width - width / 2 - 100;
-    this.y = height - height / 2 - 50;
+    this.y = height - height / 2 - 25;
 
     this.width = 200;
     this.height = 50;
