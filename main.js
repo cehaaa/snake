@@ -11,6 +11,7 @@ const board = new Board();
 const food = new Food();
 
 button.draw();
+board.startScreen();
 
 const init = () => {
   button.clear();
@@ -18,22 +19,23 @@ const init = () => {
 };
 
 const start = () => {
-  snake.draw();
-  food.pickPosition();
   board.clear();
-
+  food.pickPosition();
   setInterval(() => {
-    board.clear();
+    ctx.clearRect(0, 0, width, height);
+    board.scoreBoard(snake.score);
 
-    food.draw();
+    if (snake.score % 5 === 0) {
+      food.draw(true);
+    } else food.draw(false);
 
-    snake.draw();
     snake.update();
+    snake.draw();
 
-    if (snake.eat(food)) {
+    if (snake.eat(food, food.special)) {
       food.pickPosition();
     }
-  }, 800);
+  }, 200);
 };
 
 canvas.addEventListener("click", (event) => {

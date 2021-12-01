@@ -6,6 +6,7 @@ class Button {
     this.width = 200;
     this.height = 50;
   }
+
   draw() {
     ctx.fillStyle = "orange";
     ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -18,6 +19,7 @@ class Button {
       this.y + this.height / 2 + 5
     );
   }
+
   click(pos) {
     return (
       pos.x > this.x &&
@@ -26,6 +28,7 @@ class Button {
       pos.y > this.y
     );
   }
+
   clear() {
     ctx.clearRect(this.x, this.y, this.width, this.height);
   }
