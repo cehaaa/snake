@@ -13,8 +13,6 @@ class Snake {
     this.total = 0;
 
     this.score = 0;
-
-    this.board = new Board();
   }
 
   draw() {
@@ -109,18 +107,30 @@ class Snake {
           localStorage.setItem("python_game", JSON.stringify(this.score));
         }
 
-        // alert("Game Over");
-        // location.reload();
-
         let nextGame = confirm("Game Over, Play again ?");
         if (nextGame) {
-          this.x = 0;
-          this.y = 0;
-          this.total = 0;
-          this.body = [];
-          this.score = 0;
-        } else location.reload();
+          this.resetGame();
+        } else {
+          this.resetGame();
+          location.reload();
+        }
       }
     }
+  }
+
+  resetGame() {
+    this.x = 0;
+    this.y = 0;
+
+    this.dir = "Right";
+
+    this.body = [];
+
+    this.xSpeed = scale * 1;
+    this.ySpeed = 0;
+
+    this.total = 0;
+
+    this.score = 0;
   }
 }
