@@ -44,25 +44,6 @@ class Snake {
   }
 
   listener(dir) {
-    // switch (dir) {
-    //   case "Up":
-    //     this.xSpeed = 0;
-    //     this.ySpeed = -scale * 1;
-    //     break;
-    //   case "Down":
-    //     this.xSpeed = 0;
-    //     this.ySpeed = scale * 1;
-    //     break;
-    //   case "Left":
-    //     this.xSpeed = -scale * 1;
-    //     this.ySpeed = 0;
-    //     break;
-    //   case "Right":
-    //     this.xSpeed = scale * 1;
-    //     this.ySpeed = 0;
-    //     break;
-    // }
-
     if (dir === "Up" && this.dir != "Down") {
       this.dir = dir;
       this.xSpeed = 0;
@@ -122,8 +103,34 @@ class Snake {
   checkCollision() {
     for (let i = 0; i < this.body.length; i++) {
       if (this.x === this.body[i].x && this.y === this.body[i].y) {
-        alert("Game over");
+        if (this.score > highScore) {
+          localStorage.setItem("python_game", JSON.stringify(this.score));
+        }
+
+        let nextGame = confirm("Game Over, Play again ?");
+        if (nextGame) {
+          this.resetGame();
+        } else {
+          this.resetGame();
+          location.reload();
+        }
       }
     }
+  }
+
+  resetGame() {
+    this.x = 0;
+    this.y = 0;
+
+    this.dir = "Right";
+
+    this.body = [];
+
+    this.xSpeed = scale * 1;
+    this.ySpeed = 0;
+
+    this.total = 0;
+
+    this.score = 0;
   }
 }

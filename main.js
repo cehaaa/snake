@@ -10,8 +10,11 @@ const button = new Button();
 const board = new Board();
 const food = new Food();
 
+const highScore = JSON.parse(localStorage.getItem("python_game") || 0);
+
 button.draw();
 board.startScreen();
+board.highScore();
 
 const init = () => {
   button.clear();
